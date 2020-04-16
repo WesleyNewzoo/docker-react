@@ -5,6 +5,15 @@ services:
 before_install:
   - docker build -t wesleynewzoo/docker-react -f Dockerfile.dev .
 
-
 script:
   - docker run -e CI=true wesleynewzoo/docker-react npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-react"
+  env: "DockerReact-env-1"
+  bucket_name: elasticbeanstalk-us-east-2-058305893609
+  bucket_path: "docker-react"
+  on:
+    branch: master
